@@ -1,5 +1,6 @@
 const container = document.getElementById('danmakuContainer');
-const messages = [
+// 将原始弹幕和用户添加的弹幕分开存储
+const originalMessages = [
     // 基础称赞
     'Lucy 👑', 'Lucy is amazing ✨', 'Hello Lucy 🌟', 'Lucy 真棒 💖', 'Lucy! 🎉', 'Go Lucy 💪',
     'Lucy ❤️', 'Lucy 加油 ⭐️', 'Lucy 最棒 🏆', 'I love Lucy 💝', 'Lucy 666 🔥',
@@ -31,7 +32,16 @@ const messages = [
     // 额外的表情组合
     'Lucy 🌟✨💫', 'Lucy 💖💝💕', 'Lucy 👑🏆⭐️',
     'Lucy 🎉🎊🎆', 'Lucy 🌈🌸✨', 'Lucy 💪💎🔥'
+    // ... 其他原始弹幕内容保持不变 ...
 ];
+
+// 用户添加的弹幕数组
+const userMessages = [];
+
+// 获取当前所有弹幕（原始 + 用户添加的）
+function getAllMessages() {
+    return [...originalMessages, ...userMessages];
+}
 
 // 扩展颜色数组
 const colors = [
@@ -55,7 +65,9 @@ function createDanmaku() {
     const danmaku = document.createElement('div');
     danmaku.className = 'danmaku';
     
-    const message = messages[Math.floor(Math.random() * messages.length)];
+    // 从所有弹幕中随机选择一条
+    const allMessages = getAllMessages();
+    const message = allMessages[Math.floor(Math.random() * allMessages.length)];
     const color = colors[Math.floor(Math.random() * colors.length)];
     
     danmaku.textContent = message;
@@ -103,4 +115,85 @@ function createDanmaku() {
 }
 
 // 稍微加快弹幕生成速度
-setInterval(createDanmaku, 40); 
+setInterval(createDanmaku, 40);
+
+// 获取DOM元素
+const input = document.getElementById('danmakuInput');
+const sendButton = document.getElementById('sendButton');
+
+// 发送弹幕函数
+function sendDanmaku() {
+    const text = input.value.trim();
+    if (text) {
+        // 创建新弹幕
+        const danmaku = document.createElement('div');
+        danmaku.className = 'danmaku';
+        danmaku.textContent = text;
+        
+        // 将新弹幕添加到用户弹幕数组
+        if (!userMessages.includes(text)) {
+            userMessages.push(text);
+            // 可以选择将用户弹幕保存到localStorage
+            localStorage.setItem('userDanmaku', JSON.stringify(userMessages));
+        }
+        
+        // 使用随机颜色
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        
+        // 处理渐变色
+        if (color.includes('gradient')) {
+            danmaku.style.background = color;
+            danmaku.style.webkitBackgroundClip = 'text';
+            danmaku.style.webkitTextFillColor = 'transparent';
+        } else {
+            danmaku.style.color = color;
+        }
+        
+        // 随机字体大小
+        const fontSize = Math.random() * (28 - 16) + 16;
+        danmaku.style.fontSize = `${fontSize}px`;
+        
+        // 随机位置
+        const left = Math.random() * (container.offsetWidth - 150);
+        const top = Math.random() * (container.offsetHeight - fontSize);
+        danmaku.style.left = `${left}px`;
+        danmaku.style.top = `${top}px`;
+        
+        // 随机动画
+        const animations = ['fadeIn', 'scaleIn', 'rotateIn', 'slideIn', 'bounceIn', 'swingIn', 'pulseIn'];
+        const randomAnimation = animations[Math.floor(Math.random() * animations.length)];
+        danmaku.style.animation = `${randomAnimation} 2s`;
+        
+        container.appendChild(danmaku);
+        
+        // 清空输入框
+        input.value = '';
+        
+        // 动画结束后删除
+        setTimeout(() => {
+            danmaku.style.animation = 'fadeOut 1s';
+            danmaku.addEventListener('animationend', () => {
+                danmaku.remove();
+            });
+        }, 2000);
+    }
+}
+
+// 页面加载时从localStorage加载用户弹幕
+window.addEventListener('load', () => {
+    const savedDanmaku = localStorage.getItem('userDanmaku');
+    if (savedDanmaku) {
+        const savedMessages = JSON.parse(savedDanmaku);
+        userMessages.push(...savedMessages);
+    }
+});
+
+// 点击发送按钮发送弹幕
+sendButton.addEventListener('click', sendDanmaku);
+
+// 按回车键发送弹幕
+input.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+        sendDanmaku();
+    }
+}); 
