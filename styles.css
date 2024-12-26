@@ -150,4 +150,49 @@ body {
         1px -1px 0 rgba(0,0,0,0.3),
         -1px 1px 0 rgba(0,0,0,0.3),
         1px 1px 0 rgba(0,0,0,0.3);
+}
+
+.input-container {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    z-index: 1000;
+}
+
+#danmakuInput {
+    padding: 10px 15px;
+    width: 300px;
+    border: none;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    font-size: 16px;
+    outline: none;
+    backdrop-filter: blur(5px);
+}
+
+#danmakuInput::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+#sendButton {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    background: linear-gradient(45deg, #ff69b4, #ff1493);
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+#sendButton:hover {
+    transform: scale(1.05);
+}
+
+#sendButton:active {
+    transform: scale(0.95);
 } 
