@@ -1,0 +1,153 @@
+body {
+    margin: 0;
+    padding: 0;
+    background: #1a1a1a;
+    overflow: hidden;
+}
+
+.danmaku-container {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+}
+
+.danmaku {
+    position: absolute;
+    color: #fff;
+    white-space: nowrap;
+    font-family: Arial, sans-serif;
+    text-shadow: 0 0 3px rgba(0,0,0,0.5);
+    opacity: 0.9;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 0.9;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 0.9;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        transform: scale(0);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 0.9;
+    }
+}
+
+@keyframes rotateIn {
+    from {
+        transform: rotate(180deg) scale(0);
+        opacity: 0;
+    }
+    to {
+        transform: rotate(0deg) scale(1);
+        opacity: 0.9;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 0.9;
+    }
+}
+
+.danmaku .emoji {
+    height: 1.2em;
+    width: 1.2em;
+    vertical-align: middle;
+    margin: 0 3px;
+}
+
+@keyframes bounceIn {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.2);
+        opacity: 0.5;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 0.9;
+    }
+}
+
+@keyframes swingIn {
+    0% {
+        transform: rotate(-15deg) scale(0);
+        opacity: 0;
+    }
+    50% {
+        transform: rotate(15deg) scale(1.1);
+        opacity: 0.5;
+    }
+    100% {
+        transform: rotate(0) scale(1);
+        opacity: 0.9;
+    }
+}
+
+@keyframes pulseIn {
+    0% {
+        transform: scale(0.3);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 0.5;
+    }
+    75% {
+        transform: scale(0.9);
+        opacity: 0.7;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 0.9;
+    }
+}
+
+.danmaku .emoji {
+    height: 1.3em;
+    width: 1.3em;
+    vertical-align: middle;
+    margin: 0 3px;
+    animation: spin 4s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.danmaku {
+    text-shadow: 
+        -1px -1px 0 rgba(0,0,0,0.3),
+        1px -1px 0 rgba(0,0,0,0.3),
+        -1px 1px 0 rgba(0,0,0,0.3),
+        1px 1px 0 rgba(0,0,0,0.3);
+} 
